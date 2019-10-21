@@ -73,7 +73,7 @@ public class RSA {
 		// Aplica formula de Euler(N) = (p-1) * (q-1)
 		BigInteger euler = primo_p.subtract(BigInteger.ONE).multiply(primo_q.subtract(BigInteger.ONE));
 
-		// Gera a chave publica utilizando o indicador de Euler encontrado e calculando
+		// Gera a chave publica utilizando o valor de Euler encontrado e calculando
 		// o maximo divisor comum (gcd) entre Euler e o valor de chave gerado ate que
 		// resulte 1
 		do
