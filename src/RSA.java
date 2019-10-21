@@ -26,17 +26,49 @@ public class RSA {
 	}
 
 	/*
-	 * Gera uma chave pública e uma chave privada para usar com RSA. Estas chaves
-	 * possuem um número de bits superior a 1000. Imprime a chave pública e a chave
+	 * Gera os numeros primos que irao compor o modulo utilizado no RSA utilizando o
+	 * pequeno teorema de Fermat, testando se 2^(p-1) mod p = 1
+	 */
+	public static BigInteger[] geraNumerosPrimos() {
+		BigInteger[] numeros_primos = new BigInteger[2];
+
+		// Gera numeros primos aleatorios utilizando o metodo 'probablePrime()' da
+		// biblioteca 'BigInteger'. Valida que os numeros sao primos utilizando o
+		// pequeno teorema de Fermat
+		Random random;
+		do {
+			random = new SecureRandom();
+			numeros_primos[0] = BigInteger.probablePrime(numero_bits, random);
+		} while (!Fermat(numeros_primos[0]));
+
+		do {
+			random = new SecureRandom();
+			numeros_primos[1] = BigInteger.probablePrime(numero_bits, random);
+		} while (!Fermat(numeros_primos[1]));
+
+		return numeros_primos;
+	}
+
+	public static boolean Fermat(BigInteger p) {
+		for (int i = 0; i < numero_bits; i++) {
+
+			BigInteger a = new BigInteger("2");
+			// Verifica 2^(p-1) mod p = 1
+			if (!a.modPow(p.subtract(BigInteger.ONE), p).equals(BigInteger.ONE))
+				return false;
+		}
+		return true;
+	}
+
+	/*
+	 * Gera uma chave publica e uma chave privada para usar com RSA. Estas chaves
+	 * possuem um numero de bits superior a 1000. Imprime a chave publica e a chave
 	 * privada.
 	 */
 	public static void geraChaves() {
-
-		// Gera numeros primos aleatorios utilizando o método 'probablePrime()' da
-		// biblioteca 'BigInteger' que baseia-se no pequeno teorema de Fermat
-		Random random = new SecureRandom();
-		BigInteger primo_p = BigInteger.probablePrime(numero_bits, random);
-		BigInteger primo_q = BigInteger.probablePrime(numero_bits, random);
+		BigInteger[] numeros_primos = geraNumerosPrimos();
+		BigInteger primo_p = numeros_primos[0];
+		BigInteger primo_q = numeros_primos[1];
 
 		System.out.println("Numero primo 'p': " + primo_p);
 		System.out.println("Numero primo 'q': " + primo_q);
@@ -48,9 +80,10 @@ public class RSA {
 		BigInteger euler = primo_p.subtract(BigInteger.ONE).multiply(primo_q.subtract(BigInteger.ONE));
 
 		// Gera a chave publica utilizando o indicador de Euler encontrado e calculando
-		// o maximo divisor comum (gcd) entre Euler e o valor de chave gerado ate que resulte 1
+		// o maximo divisor comum (gcd) entre Euler e o valor de chave gerado ate que
+		// resulte 1
 		do
-			chave_publica = new BigInteger(euler.bitLength(), random);
+			chave_publica = new BigInteger(euler.bitLength(), new SecureRandom());
 		while (chave_publica.compareTo(BigInteger.ONE) <= 0 || chave_publica.compareTo(euler) >= 0
 				|| !chave_publica.gcd(euler).equals(BigInteger.ONE));
 
@@ -64,7 +97,7 @@ public class RSA {
 	}
 
 	/*
-	 * Dada uma mensagem M, cifra esta mensagem usando RSA com a chave pública
+	 * Dada uma mensagem M, cifra esta mensagem usando RSA com a chave pï¿½blica
 	 * gerada. Imprime a mensagem cifrada C.
 	 */
 
