@@ -26,44 +26,33 @@ public class RSA {
 	}
 
 	/*
-	 * Gera os numeros primos que irao compor o modulo utilizado no RSA utilizando o
-	 * pequeno teorema de Fermat, testando se 2^(p-1) mod p = 1
+	 * Pequeno teorema de Fermat que verifica se um dado numero e primo, conforme a
+	 * formula 2^(p-1) mod p = 1
 	 */
-	public static BigInteger[] geraNumerosPrimos() {
-		BigInteger[] numeros_primos = new BigInteger[2];
-
-		// Gera numeros primos aleatorios utilizando o metodo 'probablePrime()' da
-		// biblioteca 'BigInteger'. Valida que os numeros sao primos utilizando o
-		// pequeno teorema de Fermat
-		Random random;
-		
-		do {
-			random = new SecureRandom();
-			//numeros_primos[0] = BigInteger.probablePrime(numero_bits, random);
-			numeros_primos[0] = new BigInteger(numero_bits, random);
-		} while (!Fermat(numeros_primos[0]));
-
-		do {
-			random = new SecureRandom();
-			//numeros_primos[1] = BigInteger.probablePrime(numero_bits, random);
-			numeros_primos[1] = new BigInteger(numero_bits, random);
-		} while (!Fermat(numeros_primos[1]));
-
-		return numeros_primos;
-	}
-
-	/*
-	 * Utiliza o pequeno teorema de Fermat para validar se um dado numero e primo. 
-	 * */
 	public static boolean Fermat(BigInteger p) {
 		for (int i = 0; i < numero_bits; i++) {
 
 			BigInteger a = new BigInteger("2");
-			// Verifica 2^(p-1) mod p = 1
 			if (!a.modPow(p.subtract(BigInteger.ONE), p).equals(BigInteger.ONE))
 				return false;
 		}
 		return true;
+	}
+
+	/*
+	 * Gera um numero primo que ira compor o modulo utilizado no RSA utilizando o
+	 * pequeno teorema de Fermat,
+	 */
+	public static BigInteger geraNumeroPrimo() {
+		BigInteger numero_primo;
+		Random random;
+
+		do {
+			random = new SecureRandom();
+			numero_primo = new BigInteger(numero_bits, random);
+		} while (!Fermat(numero_primo));
+
+		return numero_primo;
 	}
 
 	/*
@@ -72,9 +61,8 @@ public class RSA {
 	 * privada.
 	 */
 	public static void geraChaves() {
-		BigInteger[] numeros_primos = geraNumerosPrimos();
-		BigInteger primo_p = numeros_primos[0];
-		BigInteger primo_q = numeros_primos[1];
+		BigInteger primo_p = geraNumeroPrimo();
+		BigInteger primo_q = geraNumeroPrimo();
 
 		System.out.println("Numero primo 'p': " + primo_p);
 		System.out.println("Numero primo 'q': " + primo_q);
@@ -103,7 +91,7 @@ public class RSA {
 	}
 
 	/*
-	 * Dada uma mensagem M, cifra esta mensagem usando RSA com a chave p�blica
+	 * Dada uma mensagem M, cifra esta mensagem usando RSA com a chave publica
 	 * gerada. Imprime a mensagem cifrada C.
 	 */
 	public BigInteger cifrarMensagem(String mensagem_M, BigInteger chave_publica, BigInteger N) throws Exception {
@@ -112,8 +100,7 @@ public class RSA {
 		byte[] bytes = mensagem_M.getBytes(StandardCharsets.US_ASCII);
 		mensagem_cifrada = new BigInteger(bytes);
 
-		// Para cifrar, pega a mensagem de texto claro e eleva essa
-		// mensagem na chave publica em mod N
+		// Para cifrar, eleva mensagem de texto claro na chave publica em mod N
 		mensagem_cifrada = mensagem_cifrada.modPow(chave_publica, N);
 
 		System.out.println("\nMensagem cifrada: " + mensagem_cifrada.toString());
