@@ -49,9 +49,11 @@ public class App {
 	}
 
 	/*
-	 * Fontes: https://docs.oracle.com/javase/7/docs/api/java/math/BigInteger.html
-	 * https://www.geeksforgeeks.org/biginteger-modpow-method-in-java/
+	 * Fontes: 
+	 * https://docs.oracle.com/javase/7/docs/api/java/math/BigInteger.html
+	 * https://searchsecurity.techtarget.com/definition/RSA
 	 * https://www.geeksforgeeks.org/java-math-biginteger-modinverse-method-in-java/
+	 * https://br.ccm.net/contents/136-a-codificacao-com-rsa
 	 * https://www.geeksforgeeks.org/fermats-little-theorem/
 	 */
 
