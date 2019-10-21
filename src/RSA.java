@@ -36,19 +36,25 @@ public class RSA {
 		// biblioteca 'BigInteger'. Valida que os numeros sao primos utilizando o
 		// pequeno teorema de Fermat
 		Random random;
+		
 		do {
 			random = new SecureRandom();
-			numeros_primos[0] = BigInteger.probablePrime(numero_bits, random);
+			//numeros_primos[0] = BigInteger.probablePrime(numero_bits, random);
+			numeros_primos[0] = new BigInteger(numero_bits, random);
 		} while (!Fermat(numeros_primos[0]));
 
 		do {
 			random = new SecureRandom();
-			numeros_primos[1] = BigInteger.probablePrime(numero_bits, random);
+			//numeros_primos[1] = BigInteger.probablePrime(numero_bits, random);
+			numeros_primos[1] = new BigInteger(numero_bits, random);
 		} while (!Fermat(numeros_primos[1]));
 
 		return numeros_primos;
 	}
 
+	/*
+	 * Utiliza o pequeno teorema de Fermat para validar se um dado numero e primo. 
+	 * */
 	public static boolean Fermat(BigInteger p) {
 		for (int i = 0; i < numero_bits; i++) {
 
@@ -100,7 +106,6 @@ public class RSA {
 	 * Dada uma mensagem M, cifra esta mensagem usando RSA com a chave p�blica
 	 * gerada. Imprime a mensagem cifrada C.
 	 */
-
 	public BigInteger cifrarMensagem(String mensagem_M, BigInteger chave_publica, BigInteger N) throws Exception {
 		BigInteger mensagem_cifrada;
 
@@ -120,7 +125,6 @@ public class RSA {
 	 * Dada uma mensagem C, decifra esta mensagem usando RSA com a chave privada
 	 * gerada. Imprime a mensagem decifrada.
 	 */
-
 	public void decifrarMensagem(BigInteger mensagem_cifrada, BigInteger chave_privada, BigInteger N) {
 		String mensagem_decifrada = "";
 

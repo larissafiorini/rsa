@@ -28,7 +28,7 @@ public class App {
 	public static void main(String[] args) {
 
 		String mensagem = "Implementando RSA em Java";
-		System.out.println("**RSA** \nMensagem original: " + mensagem);
+		System.out.println("**RSA** \nMensagem original: " + mensagem+"\n");
 
 		try {
 			RSA rsa = new RSA();
