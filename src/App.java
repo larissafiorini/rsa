@@ -10,13 +10,13 @@ public class App {
 	 * 1000. Dada uma mensagem com texto claro M, o programa cifra esta mensagem
 	 * usando RSA com a chave publica gerada. Dada uma mensagem cifrada C, o
 	 * programa decifra esta mensagem usando RSA com a chave privada gerada. Os
-	 * numeros primos que compoem o modulo utilizado no RSA s„o gerados utilizando o
+	 * numeros primos que compoem o modulo utilizado no RSA s√£o gerados utilizando o
 	 * pequeno teorema de Fermat.
 	 * 
 	 * 
-	 * Execucao: Para testar o programa È preciso executar a classe principal
+	 * Execucao: Para testar o programa √© preciso executar a classe principal
 	 * 'App.java'. Nessa classe ocorre a chamada dos metodos de geracao das chaves,
-	 * de cifragem e decifragem, e tambÈm a definicao da mensagem de texto claro
+	 * de cifragem e decifragem, e tamb√©m a definicao da mensagem de texto claro
 	 * inicial.
 	 * 
 	 * Autora: Larissa Fiorini Martins 
@@ -36,10 +36,10 @@ public class App {
 			// Gera chaves publica e privada
 			rsa.geraChaves();
 
-			// Recebe mensagem com texto claro, chave publica e modulo N
+			// Recebe mensagem com texto claro para cifrar, chave publica e modulo N
 			BigInteger mensagem_cifrada = rsa.cifrarMensagem(mensagem, rsa.getChave_publica(), rsa.getN());
 
-			// Recebe mensagem com texto cifrado, chave publica e modulo N
+			// Recebe mensagem com texto cifrado para decifrar, chave privada e modulo N
 			rsa.decifrarMensagem(mensagem_cifrada, rsa.getChave_privada(), rsa.getN());
 
 		} catch (Exception e) {
