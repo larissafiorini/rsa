@@ -55,6 +55,7 @@ public class App {
 	 * https://www.geeksforgeeks.org/java-math-biginteger-modinverse-method-in-java/
 	 * https://br.ccm.net/contents/136-a-codificacao-com-rsa
 	 * https://www.geeksforgeeks.org/fermats-little-theorem/
+	 * https://www.cut-the-knot.org/blue/Euler.shtml
 	 */
 
 }
