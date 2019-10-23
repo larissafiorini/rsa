@@ -40,8 +40,8 @@ public class RSA {
 	}
 
 	/*
-	 * Gera um numero primo que ira compor o modulo utilizado no RSA utilizando o
-	 * pequeno teorema de Fermat,
+	 * Gera um numero primo, que ira compor o modulo utilizado no RSA, utilizando o
+	 * pequeno teorema de Fermat.
 	 */
 	public static BigInteger geraNumeroPrimo() {
 		BigInteger numero_primo;
@@ -57,8 +57,8 @@ public class RSA {
 
 	/*
 	 * Gera uma chave publica e uma chave privada para usar com RSA. Estas chaves
-	 * possuem um numero de bits superior a 1000. Imprime a chave publica e a chave
-	 * privada.
+	 * possuem um numero de bits superior a 1000. Por fim, imprime as chaves publica e 
+	 * privada geradas.
 	 */
 	public static void geraChaves() {
 		BigInteger primo_p = geraNumeroPrimo();
