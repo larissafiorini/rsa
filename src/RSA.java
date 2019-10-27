@@ -10,19 +10,9 @@ public class RSA {
 	private static BigInteger chave_publica;
 	private static BigInteger N;
 
-	public RSA() {
-	}
-
-	public static BigInteger getChave_privada() {
-		return chave_privada;
-	}
-
-	public static BigInteger getChave_publica() {
-		return chave_publica;
-	}
-
-	public static BigInteger getN() {
-		return N;
+	public RSA(int nb) {
+		numero_bits = nb;
+		System.out.println("Numero de bits: "+numero_bits);
 	}
 
 	/*
@@ -60,18 +50,20 @@ public class RSA {
 	 * possuem um numero de bits superior a 1000. Por fim, imprime as chaves publica e 
 	 * privada geradas.
 	 */
-	public static void geraChaves() {
+	public void geraChaves() {
 		BigInteger primo_p = geraNumeroPrimo();
 		BigInteger primo_q = geraNumeroPrimo();
 
 		System.out.println("Numero primo 'p': " + primo_p);
-		System.out.println("Numero primo 'q': " + primo_q);
+		System.out.println("\nNumero primo 'q': " + primo_q);
 
 		// Calcula o produto dos numeros primos para descobrir o modulo N
 		N = primo_p.multiply(primo_q);
+		System.out.println("\nModulo 'N': " + N);
 
 		// Aplica formula de Euler(N) = (p-1) * (q-1)
 		BigInteger euler = primo_p.subtract(BigInteger.ONE).multiply(primo_q.subtract(BigInteger.ONE));
+		System.out.println("\nEuler(N): " + euler);
 
 		// Gera a chave publica utilizando o valor de Euler encontrado e calculando
 		// o maximo divisor comum (gcd) entre Euler e o valor de chave gerado ate que
@@ -85,8 +77,8 @@ public class RSA {
 		// na biblioteca 'BigInteger'
 		chave_privada = chave_publica.modInverse(euler);
 
-		System.out.println("Chave publica: " + chave_publica);
-		System.out.println("Chave privada: " + chave_privada);
+		System.out.println("\nChave publica: " + chave_publica);
+		System.out.println("\nChave privada: " + chave_privada);
 
 	}
 
@@ -94,8 +86,10 @@ public class RSA {
 	 * Dada uma mensagem M, cifra esta mensagem usando RSA com a chave publica
 	 * gerada. Imprime a mensagem cifrada C.
 	 */
-	public BigInteger cifrarMensagem(String mensagem_M, BigInteger chave_publica, BigInteger N) throws Exception {
+	public BigInteger cifrarMensagem(String mensagem_M, String chave, String modN) throws Exception {
 		BigInteger mensagem_cifrada;
+		chave_publica = new BigInteger(chave);
+		N = new BigInteger(modN);
 
 		byte[] bytes = mensagem_M.getBytes(StandardCharsets.US_ASCII);
 		mensagem_cifrada = new BigInteger(bytes);
@@ -112,8 +106,11 @@ public class RSA {
 	 * Dada uma mensagem C, decifra esta mensagem usando RSA com a chave privada
 	 * gerada. Imprime a mensagem decifrada.
 	 */
-	public void decifrarMensagem(BigInteger mensagem_cifrada, BigInteger chave_privada, BigInteger N) {
+	public void decifrarMensagem(String mensagem_C, String chave, String modN) {
 		String mensagem_decifrada = "";
+		BigInteger mensagem_cifrada = new BigInteger(mensagem_C);
+		chave_privada = new BigInteger(chave);
+		N = new BigInteger(modN);
 
 		// Para decifrar, eleva mensagem cifrada na chave privada em mod N
 		BigInteger decifrando = mensagem_cifrada.modPow(chave_privada, N);

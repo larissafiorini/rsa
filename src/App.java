@@ -1,4 +1,6 @@
 import java.math.BigInteger;
+import java.util.Scanner;
+
 
 public class App {
 
@@ -25,27 +27,51 @@ public class App {
 	 * 
 	 */
 
-	public static void main(String[] args) {
 
-		String mensagem = "Implementando RSA em Java";
-		System.out.println("**RSA** \nMensagem original: " + mensagem+"\n");
+	public static void main(String[] args) throws Exception {
 
-		try {
-			RSA rsa = new RSA();
+		String mensagem ="";
+		String modN ="";
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Digite: \n1 - Gerar chaves \n2 - Cifrar \n3 - Decifrar");
+		Integer escolha = sc.nextInt();
+		System.out.println("Digite o numero de bits:");
+		Integer num_bits = sc.nextInt();
+		RSA rsa = new RSA(num_bits);
 
-			// Gera chaves publica e privada
-			rsa.geraChaves();
-
-			// Recebe mensagem com texto claro para cifrar, chave publica e modulo N
-			BigInteger mensagem_cifrada = rsa.cifrarMensagem(mensagem, rsa.getChave_publica(), rsa.getN());
-
-			// Recebe mensagem com texto cifrado para decifrar, chave privada e modulo N
-			rsa.decifrarMensagem(mensagem_cifrada, rsa.getChave_privada(), rsa.getN());
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		switch(escolha){
+			case 1:
+				System.out.println("Gerando chaves...");
+				// Gera chaves publica e privada
+				rsa.geraChaves();
+				break;
+			case 2:
+				System.out.println("Digite a mensagem de texto claro para cifrar: ");
+				mensagem = sc.next();
+				System.out.println("Digite a chave publica: \n");
+				String chave_publica = sc.next();
+				System.out.println("Digite o modulo N: \n");
+				modN = sc.next();
+				System.out.println("Cifrando mensagem...");
+				// Recebe mensagem com texto claro para cifrar, chave publica e modulo N
+				rsa.cifrarMensagem(mensagem, chave_publica, modN);
+				break;
+			case 3:
+				System.out.println("Digite a mensagem cifrada para decifrar: ");
+				mensagem = sc.next();
+				System.out.println("Digite a chave privada: ");
+				String chave_privada = sc.next();
+				System.out.println("Digite o modulo N: ");
+				modN = sc.next();
+				System.out.println("Decifrando mensagem...");
+				// Recebe mensagem com texto cifrado para decifrar, chave privada e modulo N
+				rsa.decifrarMensagem(mensagem, chave_privada, modN);
+				break;
+			default:
+				System.out.println("Digite 1, 2 ou 3.");
 		}
-
+		sc.close();
+		
 	}
 
 	/*
