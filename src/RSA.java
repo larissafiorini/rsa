@@ -93,6 +93,10 @@ public class RSA {
 
 		byte[] bytes = mensagem_M.getBytes(StandardCharsets.US_ASCII);
 		mensagem_cifrada = new BigInteger(bytes);
+		if (N.compareTo(mensagem_cifrada) == -1){
+			System.out.println("A mensagem a ser cifrada nao pode ser maior que o modulo N para o correto funcionamento do RSA implementado neste programa.");
+			System.exit(0);
+		}
 
 		// Para cifrar, eleva mensagem de texto claro na chave publica em mod N
 		mensagem_cifrada = mensagem_cifrada.modPow(chave_publica, N);
