@@ -12,7 +12,7 @@ public class RSA {
 
 	public RSA(int nb) {
 		numero_bits = nb;
-		System.out.println("Numero de bits: "+numero_bits);
+		System.out.println("Numero de bits: " + numero_bits);
 	}
 
 	/*
@@ -47,8 +47,8 @@ public class RSA {
 
 	/*
 	 * Gera uma chave publica e uma chave privada para usar com RSA. Estas chaves
-	 * possuem um numero de bits superior a 1000. Por fim, imprime as chaves publica e 
-	 * privada geradas.
+	 * possuem um numero de bits superior a 1000. Por fim, imprime as chaves publica
+	 * e privada geradas.
 	 */
 	public void geraChaves() {
 		BigInteger primo_p = geraNumeroPrimo();
@@ -93,8 +93,9 @@ public class RSA {
 
 		byte[] bytes = mensagem_M.getBytes(StandardCharsets.US_ASCII);
 		mensagem_cifrada = new BigInteger(bytes);
-		if (N.compareTo(mensagem_cifrada) == -1){
-			System.out.println("A mensagem a ser cifrada nao pode ser maior que o modulo N para o correto funcionamento do RSA implementado neste programa.");
+		if (N.compareTo(mensagem_cifrada) == -1) {
+			System.out.println(
+					"A mensagem a ser cifrada nao pode ser maior que o modulo N para o correto funcionamento da implementacao do RSA neste programa.");
 			System.exit(0);
 		}
 
